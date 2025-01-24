@@ -15,6 +15,20 @@ export function GuildGraph({ data }: { data: GuildData[] }) {
     guilds: entry.guilds,
   }));
 
+  if (formattedData.length === 0) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Guild Growth Over Time</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <p className="text-center text-muted-foreground">No data available.</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+
   return (
     <Card>
       <CardHeader>
