@@ -1,14 +1,10 @@
 
 import { NextResponse } from "next/server";
 import { auth } from "~/auth";
-import { findOne, updateOne } from "@/util/mongo";
+import { findOne } from "@/util/mongo";
 import { withAuth } from "@/util/api-middleware";
-import { setCached } from "@/util/redis";
-interface GuildParams {
-    id: string;
-  }
-export const GET = (request: Request, context: { params: GuildParams }) =>
-    withAuth<GuildParams>(async (session, { params }) => {
+
+export async function GET(req: Request, context: { params: { id: string } }) {
     try {
     const { id } = await context.params;
     const session = await auth();
@@ -25,5 +21,4 @@ export const GET = (request: Request, context: { params: GuildParams }) =>
     console.error("Error occurred:", error);
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
-});
-
+}
