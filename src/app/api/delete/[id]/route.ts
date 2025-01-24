@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
 import { auth } from "~/auth";
 import { deleteOne } from "@/util/mongo";
+import { useRouter } from 'next/router';
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+
+export async function DELETE(request: Request) {
   try {
-    const { id } = params;
+    const router = useRouter();
+    const id = router.query.id as string;
     const session = await auth();
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

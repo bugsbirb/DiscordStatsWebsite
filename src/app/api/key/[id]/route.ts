@@ -3,14 +3,17 @@ import { auth } from "~/auth";
 import { findOne, updateOne } from "@/util/mongo";
 import { withAuth } from "@/util/api-middleware";
 import { setCached } from "@/util/redis";
+import { use } from "react";
+
+import { useRouter } from 'next/router';
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+
 ) {
   try {
-    const { id } = params;
-
+    const router = useRouter();
+    const id = router.query.id as string;
     const session = await auth();
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

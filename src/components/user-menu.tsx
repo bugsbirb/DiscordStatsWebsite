@@ -37,7 +37,7 @@ export function UserMenu({ user }: UserMenuProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem asChild>
-          <Link href="/myapps" className="w-full">
+          <Link href="/mybots" className="w-full">
             My Apps
           </Link>
         </DropdownMenuItem>
