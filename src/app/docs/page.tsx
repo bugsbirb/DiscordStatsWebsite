@@ -45,7 +45,7 @@ export default function UpdateStatsDocs() {
         </CardHeader>
         <CardContent>
           <pre className="bg-muted p-4 rounded-md overflow-x-auto">
-            <code>POST http://127.0.0.1:8000/Updatestats</code>
+            <code>POST http:///Updatestats</code>
           </pre>
         </CardContent>
       </Card>

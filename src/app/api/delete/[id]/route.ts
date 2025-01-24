@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import { auth } from "~/auth";
 import { deleteOne } from "@/util/mongo";
 
-export async function DELETE(req: Request, context: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   try {
-    const { id } = await context.params;
+    const { id } = params;
     const session = await auth();
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
