@@ -45,7 +45,7 @@ export default function UpdateStatsDocs() {
         </CardHeader>
         <CardContent>
           <pre className="bg-muted p-4 rounded-md overflow-x-auto">
-            <code>POST http:///Updatestats</code>
+            <code>POST http://stats-pearl.vercel.app/Updatestats</code>
           </pre>
         </CardContent>
       </Card>
