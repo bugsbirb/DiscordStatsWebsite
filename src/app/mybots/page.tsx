@@ -10,8 +10,8 @@ import Head from "next/head";
 
 
 
-export async function getOwnedBots() {
-    const cookieStore = cookies();
+async function getOwnedBots() {
+    const cookieStore = await cookies();
     const cookieEntries = (await cookieStore).getAll(); 
     const cookieString = cookieEntries
       .map((cookie) => `${cookie.name}=${cookie.value}`)

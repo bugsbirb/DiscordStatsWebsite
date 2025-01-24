@@ -1,35 +1,30 @@
-
-import { notFound } from "next/navigation"
-import Header from "@/components/nav"
+import { notFound } from "next/navigation";
+import Header from "@/components/nav";
 import { cookies } from "next/headers";
-import { BotInfo } from "@/components/bot-info"
-import { GuildGraph } from "@/components/guildgraph"
+import { BotInfo } from "@/components/bot-info";
+import { GuildGraph } from "@/components/guildgraph";
 
+async function GetBot(id: string) {
+  const cookieStore = await cookies();
+  const cookieEntries = (await cookieStore).getAll();
+  const cookieString = cookieEntries
+    .map((cookie) => `${cookie.name}=${cookie.value}`)
+    .join("; ");
 
-export async function GetBot(params: { id: string }) {
+  const res = await fetch(`${process.env.SITE}/api/bot/${id}`, {
+    method: "GET",
+    headers: {
+      Cookie: cookieString,
+    },
+  });
 
-    const cookieStore = await cookies();
-    const cookieEntries = (await cookieStore).getAll(); 
-    const cookieString = cookieEntries
-      .map((cookie) => `${cookie.name}=${cookie.value}`)
-      .join("; ");
-  
-    const res = await fetch(`${process.env.SITE}/api/bot/${params.id}`, {
-      method: "GET",
-      headers: {
-        Cookie: cookieString,
-      },
-    });
-  
-    if (!res.ok) {
-        notFound();
-    }
-  
-    return res.json();
+  return res.json();
 }
 
-export default async function BotPage({params}: {params: {id: string}}) {
-  const bot = await GetBot(await params);
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
+  const bot = await GetBot(params.id);
+
   if (!bot) {
     notFound();
   }
@@ -42,5 +37,5 @@ export default async function BotPage({params}: {params: {id: string}}) {
         <GuildGraph data={bot.stats} />
       </div>
     </>
-  )
+  );
 }

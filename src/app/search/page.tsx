@@ -1,28 +1,27 @@
 import { SearchResults } from "./results";
-import Head from "next/head";
 import Header from "@/components/nav";
 
-export async function GetResults(params: { query: string }) {
-  const res = await fetch(`${process.env.SITE}/api/search?q=${params.query}`, {
+async function GetResults(query: string) {
+  const res = await fetch(`${process.env.SITE}/api/search?q=${query}`, {
     method: "GET",
   });
   return res.json();
 }
 
-export default async function SearchPage({
-  searchParams,
+export default async function Page({
+  params,
 }: {
-  searchParams: { q: string };
+  params: Promise<{ q: string }>;
 }) {
-  const query = (await searchParams)?.q || "placeholder";
-  const bots = await GetResults({ query });
+  const { q } = await params;
+  const bots = await GetResults(q);
 
   return (
     <>
       <Header />
 
       <main>
-        <SearchResults bots={bots} query={""} />
+        <SearchResults bots={bots} query={q} />
       </main>
     </>
   );

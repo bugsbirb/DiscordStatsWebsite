@@ -71,6 +71,9 @@ importers:
       next-auth:
         specifier: ^5.0.0-beta.25
         version: 5.0.0-beta.25(next@15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
+      next-nprogress-bar:
+        specifier: ^2.4.3
+        version: 2.4.3
       next-themes:
         specifier: ^0.4.4
         version: 0.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1313,6 +1316,9 @@ packages:
       nodemailer:
         optional: true
 
+  next-nprogress-bar@2.4.3:
+    resolution: {integrity: sha512-069WmFALkpCyKiIy89q6dWcPiHhUmXh6EZz6oLpOS7zsIunNOYLscloKFALjIQNCOg3ZO9dWRPowYW4ULho4HQ==}
+
   next-themes@0.4.4:
     resolution: {integrity: sha512-LDQ2qIOJF0VnuVrrMSMLrWGjRMkq+0mpgl6e0juCLqdJ+oo8Q84JRWT6Wh11VDQKkMMe+dVzDKLWs5n87T+PkQ==}
     peerDependencies:
@@ -1350,6 +1356,9 @@ packages:
   normalize-range@0.1.2:
     resolution: {integrity: sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==}
     engines: {node: '>=0.10.0'}
+
+  nprogress-v2@1.0.4:
+    resolution: {integrity: sha512-HPhTEgqsQMFXXuaftvu6bevqEXvcQ/hogvkAswlcNyS9eRGjvo7wZY1O4H3aZS4Uq8oWSO6sL3dOj6Oq/ZJN5A==}
 
   oauth4webapi@3.1.4:
     resolution: {integrity: sha512-eVfN3nZNbok2s/ROifO0UAc5G8nRoLSbrcKJ09OqmucgnhXEfdIQOR4gq1eJH1rN3gV7rNw62bDEgftsgFtBEg==}
@@ -2787,6 +2796,10 @@ snapshots:
       next: 15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
 
+  next-nprogress-bar@2.4.3:
+    dependencies:
+      nprogress-v2: 1.0.4
+
   next-themes@0.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       react: 19.0.0
@@ -2822,6 +2835,8 @@ snapshots:
   normalize-path@3.0.0: {}
 
   normalize-range@0.1.2: {}
+
+  nprogress-v2@1.0.4: {}
 
   oauth4webapi@3.1.4: {}
 
