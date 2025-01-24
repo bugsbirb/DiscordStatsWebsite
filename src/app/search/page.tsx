@@ -24,12 +24,8 @@ async function GetResults(query: string): Promise<Bot[]> {
   }
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ q: string }>;
-}) {
-  const { q } = await params;
+export default async function Page({ searchParams }: { searchParams: { q?: string } }) {    const query = searchParams.q || ""; 
+  const q = decodeURIComponent(query);
   const bots = await GetResults(q);
 
   return (
