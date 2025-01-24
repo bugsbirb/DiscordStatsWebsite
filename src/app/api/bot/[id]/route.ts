@@ -1,15 +1,12 @@
+
 import { NextResponse } from "next/server";
 import { auth } from "~/auth";
 import { findOne } from "@/util/mongo";
-import { use } from "react";
-import { useRouter } from 'next/router';
+import { withAuth } from "@/util/api-middleware";
 
-export async function GET(
-  req: Request,
-) {
-  try {
-    const router = useRouter();
-    const id = router.query.id as string;
+export async function GET(req: Request, context: { params: { id: string } }) {
+    try {
+    const { id } = context.params;
     const session = await auth();
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -22,9 +19,6 @@ export async function GET(
     return NextResponse.json(bot);
   } catch (error) {
     console.error("Error occurred:", error);
-    return NextResponse.json(
-      { message: "Internal Server Error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
 }

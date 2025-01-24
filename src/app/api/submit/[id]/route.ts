@@ -21,7 +21,7 @@ export async function getDiscordBot(ID: string): Promise<any | null> {
 
 export async function POST(req: Request, context: { params: { id: string } }) {
   try {
-    const { id } = await context.params;
+    const { id } = context.params;
     const body = await req.json();
 
     const session = await auth();
