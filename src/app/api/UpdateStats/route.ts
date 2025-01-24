@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { updateOne } from "@/util/mongo";
 
-export const POST = async (req: NextRequest) => {
-  const auth = req.headers.get("Authorization") || "";
+export async function POST(request: NextRequest) {
+  const auth = request.headers.get("Authorization") || "";
   console.log(auth)
 
   try {
-    const body = await req.json();
+    const body = await request.json();
 
     const result = await updateOne(
       "submissions",
