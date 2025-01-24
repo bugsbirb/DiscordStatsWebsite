@@ -5,9 +5,9 @@ import { findOne, updateOne } from "@/util/mongo";
 import { withAuth } from "@/util/api-middleware";
 import { setCached } from "@/util/redis";
 
-export async function GET(req: Request, context: { params: { id: string } }) {
+export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = context.params;
+    const { id } = (await context.params);
     const session = await auth();
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -27,7 +27,7 @@ export async function GET(req: Request, context: { params: { id: string } }) {
   }
 }
 
-export async function PATCH(req: Request, context: { params: { id: string } }) {
+export async function PATCH(req: Request, context: { params: Promise<{ id: string }> }) {
     const { id } = await context.params;
     const body = await req.json();
     const session = await auth();

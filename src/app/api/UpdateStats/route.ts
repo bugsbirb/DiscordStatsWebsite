@@ -3,6 +3,7 @@ import { updateOne } from "@/util/mongo";
 
 export const POST = async (req: NextRequest) => {
   const auth = req.headers.get("Authorization") || "";
+  console.log(auth)
 
   try {
     const body = await req.json();

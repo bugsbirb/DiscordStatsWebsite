@@ -4,9 +4,9 @@ import { auth } from "~/auth";
 import { findOne } from "@/util/mongo";
 import { withAuth } from "@/util/api-middleware";
 
-export async function GET(req: Request, context: { params: { id: string } }) {
+export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
     try {
-    const { id } = context.params;
+    const { id } = (await context.params);
     const session = await auth();
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

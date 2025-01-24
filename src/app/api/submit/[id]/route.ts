@@ -1,28 +1,13 @@
 import { NextResponse } from "next/server";
 import { auth } from "~/auth";
 import { findOne, insertOne, updateOne } from "@/util/mongo";
-import { fetchWithRetry } from "@/util/api-helpers";
 import Discord from "next-auth/providers/discord";
 
-export async function getDiscordBot(ID: string): Promise<any | null> {
-  if (!ID) {
-    return null;
-  }
 
-  const url = `https://discord.com/api/users/${ID}`;
-  const response = await fetchWithRetry(url, {
-    headers: {
-      Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-    },
-  });
 
-  return response;
-}
-
-export async function POST(req: Request, context: { params: { id: string } }) {
+export async function POST(req: Request, context: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = context.params;
-    const body = await req.json();
+    const { id } = (await context.params);
 
     const session = await auth();
     if (!session) {
@@ -31,18 +16,20 @@ export async function POST(req: Request, context: { params: { id: string } }) {
 
     const submission = await findOne("submissions", { id });
     const DiscordBot = await getDiscordBot(id);
+
+    if (!DiscordBot) {
+      console.log("DiscordBot is null");
+      return NextResponse.json(
+        { status: 404, message: "Discord bot not found" },
+        { status: 404 }
+      );
+    }
     if (DiscordBot.code === 10013) {
       return NextResponse.json(
         { status: 404, message: "Discord bot not found" },
         { status: 404 }
       );
-    }
-    if (!DiscordBot) {
-      return NextResponse.json(
-        { status: 404, message: "Discord bot not found" },
-        { status: 404 }
-      );
-    }
+    }    
     if (DiscordBot.bot === false) {
       return NextResponse.json(
         { status: 400, message: "Discord user is not a bot" },
@@ -77,4 +64,34 @@ export async function POST(req: Request, context: { params: { id: string } }) {
       { status: 500 }
     );
   }
+}
+
+type DiscordUser = {
+  id: string;
+  username: string;
+  discriminator: string;
+  avatar: string | null;
+  bot: boolean;
+  banner: string | null;
+  code: number;
+};
+
+async function getDiscordBot(ID: string) {
+  if (!ID) {
+    return null; 
+  }
+  const url = `https://discord.com/api/users/${ID}`;
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+    },
+    method: "GET",
+  });
+  if (!response.ok) {
+    if (response.status === 404) {
+      return null;
+    }
+  }
+  const responseJson = await response.json();
+  return responseJson;
 }

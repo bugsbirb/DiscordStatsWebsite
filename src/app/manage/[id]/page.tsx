@@ -9,7 +9,7 @@ import { auth } from "~/auth";
 
 
 export async function GetBot(params: { id: string }) {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const cookieEntries = (await cookieStore).getAll(); 
     const cookieString = cookieEntries
       .map((cookie) => `${cookie.name}=${cookie.value}`)
