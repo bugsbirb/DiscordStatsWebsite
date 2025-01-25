@@ -35,11 +35,12 @@ export function SearchResults({ bots, query }: SearchResultsProps) {
           className="flex items-center space-x-4 p-4 bg-card hover:bg-accent rounded-lg transition-colors"
         >
           <div className="bg-primary/10 p-2 rounded-full">
-          
             <UserAvatar
               user={{
                 name: bot.username,
-                image: `https://cdn.discordapp.com/avatars/${bot.id}/${bot.avatar}.png`  ,
+                image: bot.avatar
+                  ? `https://cdn.discordapp.com/avatars/${bot.id}/${bot.avatar}.png`
+                  : `https://cdn.discordapp.com/embed/avatars/0.png`,
               }}
               className="h-10 w-10"
             />

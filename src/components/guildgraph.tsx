@@ -10,23 +10,24 @@ interface GuildData {
 }
 
 export function GuildGraph({ data }: { data: GuildData[] }) {
-  const formattedData = data.map((entry) => ({
-    name: format(new Date(entry.timestamp), "MMM dd"),
-    guilds: entry.guilds,
-  }));
-
-  if (formattedData.length === 0) {
+  if (!data) {
     return (
       <Card>
         <CardHeader>
           <CardTitle>Guild Growth Over Time</CardTitle>
         </CardHeader>
         <CardContent className="pt-6">
-          <p className="text-center text-muted-foreground">No data available.</p>
+          <p className="text-center text-muted-foreground">No data available. Head to the documentation to learn how to add data.</p>
         </CardContent>
       </Card>
     );
   }
+
+  const formattedData = data.map((entry) => ({
+    name: format(new Date(entry.timestamp), "MMM dd"),
+    guilds: entry.guilds,
+  }));
+
 
 
   return (

@@ -10,7 +10,7 @@ interface UserAvatarProps {
 export function UserAvatar({ user, className }: UserAvatarProps) {
   return (
     <img
-      src={user.image || "/assets/placeholder.jpg"}
+      src={user.image || "https://cdn.discordapp.com/embed/avatars/0.png"}
       alt={user.name || "User"}
       className={`rounded-full ${className}`}
     />
